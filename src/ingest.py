@@ -97,6 +97,6 @@ if __name__ == "__main__":
     if not os.path.exists(pdf_path):
         print(f"[!] File not found: {pdf_path}")
     else:
-        chunks = extract_and_chunk_pdf(pdf_path)
+        chunks = extract_and_chunk_pdf(pdf_path, chunk_size=300, overlap=50)
         if chunks:
             print(f"\nSample chunk:\n{'─'*50}\n{chunks[0]}\n{'─'*50}")

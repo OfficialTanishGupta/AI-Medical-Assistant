@@ -568,6 +568,9 @@ with center_col:
             spoken = listen_to_microphone()
             if spoken:
                 st.session_state.voice_buffer = spoken
+                st.session_state.chat_input_key += (
+                    1  # force new widget instance to accept value=
+                )
                 st.rerun()
 
         # ── Handle clear
@@ -579,9 +582,10 @@ with center_col:
             st.rerun()
 
         # ── Handle submit
-        if submit and user_question.strip():
+        effective_query = user_question.strip() or st.session_state.voice_buffer.strip()
+        if submit and effective_query:
             ts = datetime.now().strftime("%H:%M")
-            q = user_question.strip()
+            q = effective_query
 
             st.session_state.messages.append({"role": "user", "content": q, "time": ts})
             st.session_state.voice_buffer = ""  # clear voice buffer
@@ -681,13 +685,16 @@ with center_col:
             st.rerun()
 
         # ── Handle submit
-        if med_submit and med_query.strip():
+
+        effective_med = med_query.strip() or st.session_state.med_name_searched.strip()
+        if med_submit and effective_med:
             show_loader(
-                "Retrieving Clinical Profile", f"Querying vector store for {med_query}…"
+                "Retrieving Clinical Profile",
+                f"Querying vector store for {effective_med}…",
             )
-            result = search_medicine_details(med_query.strip())
+            result = search_medicine_details(effective_med)
             st.session_state.med_result = result
-            st.session_state.med_name_searched = med_query.strip()
+            st.session_state.med_name_searched = effective_med
             st.session_state.query_count += 1
             st.rerun()
 

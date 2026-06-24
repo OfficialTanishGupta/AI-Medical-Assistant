@@ -85,17 +85,37 @@ def search_medicine_details(med_name: str) -> str:
         context_str = "\n\n".join(retrieved_chunks)
 
         system_prompt = (
-            f"You are a clinical pharmacology assistant. Analyze the reference material regarding '{med_name}'. "
-            "Provide a clear, clinical summary strictly structured into three exact headings:\n"
+            "You are a clinical pharmacology assistant. Your primary task is to analyze the user's query and provide a structured clinical summary.\n\n"
+            "CRITICAL LANGUAGE RULE:\n"
+            "- Check if the user query contains Devanagari script (e.g., पैरासिटामोल) OR Roman Hindi/Hinglish (e.g., 'bukhar ki dawa', 'hindi me batao').\n"
+            "- If Hindi/Hinglish is detected, you MUST write the ENTIRE response in Hindi (Devanagari script) using Hindi headings.\n"
+            "- If the query is strictly standard English, respond in English using English headings.\n\n"
+            "EXAMPLES OF HINDI DETECTION:\n"
+            "- Input: 'Paracetamol khane se kya hota hai' -> Output MUST be 100% Hindi (Devanagari).\n"
+            "- Input: 'क्रोसिन के फायदे' -> Output MUST be 100% Hindi (Devanagari).\n"
+            "- Input: 'What is Aspirin used for?' -> Output MUST be 100% English.\n\n"
+            "REQUIRED FORMAT FOR HINDI:\n"
+            "### 📋 उपयोग (Uses)\n"
+            "[Content in Hindi]\n"
+            "### ⚠️ दुष्प्रभाव और चेतावनी (Side Effects & Warnings)\n"
+            "[Content in Hindi]\n"
+            "### 💊 खुराक की जानकारी (Dosage Information)\n"
+            "[Content in Hindi]\n\n"
+            "REQUIRED FORMAT FOR ENGLISH:\n"
             "### 📋 Uses\n"
+            "[Content in English]\n"
             "### ⚠️ Side Effects & Warnings\n"
-            "### 💊 Dosage Information\n\n"
-            "If the reference material does not contain specific information for a section, use your "
-            "comprehensive internal medical knowledge to fill in standard clinical guidelines for that medicine. "
-            "Never use phrases like 'based on the text' or 'the chunks state'."
+            "[Content in English]\n"
+            "### 💊 Dosage Information\n"
+            "[Content in English]"
         )
+
         user_prompt = (
-            f"Reference Material:\n{context_str}\n\nMedicine to Look Up:\n{med_name}"
+            f"User query / medicine name: '{med_name}'\n\n"
+            f"Reference Material:\n{context_str}\n\n"
+            "REMINDER: You MUST detect the language of the user query above and reply in that exact same language. "
+            "If the query has Hindi words or Devanagari script, your full response must be in Hindi (Devanagari). "
+            "Do not respond in English if the input was Hindi."
         )
 
         response = ollama.generate(

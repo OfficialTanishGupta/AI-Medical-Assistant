@@ -1,87 +1,123 @@
-# 🩺 AI Medical Assistant (Offline LLM + RAG)
+# 🩺 AI Medical Assistant (Offline LLM + RAG + Voice Assistant)
 
-An AI-powered Medical Assistant that runs **completely offline** using a local Large Language Model (LLM), Retrieval-Augmented Generation (RAG), and a Medical Knowledge Base.
+An AI-powered Medical Assistant that runs **completely offline** using a local Large Language Model (LLM), Retrieval-Augmented Generation (RAG), a Medical Knowledge Base, and Voice Interaction capabilities.
 
-This project enables users to ask medical questions, search medicine information, and retrieve accurate answers from medical documents without requiring an internet connection.
+This project enables users to ask medical questions, search medicine information, retrieve answers from trusted medical documents, and interact with the assistant using voice commands without requiring internet connectivity.
 
 ---
 
 # 🚀 Features
 
-### Current Features (Phase 1 - 8)
+## Implemented Features (Phase 1 - Phase 9)
 
-✅ Local LLM Integration using Ollama
+### 🤖 Local AI Assistant
 
-✅ Offline AI Chat Assistant
+- Local Llama 3 Integration using Ollama
+- Fully Offline Operation
+- Privacy-Focused Design
+- No External API Required
 
-✅ Medical PDF Knowledge Base
+### 📚 Medical Knowledge Base
 
-✅ PDF Text Extraction
+- Medical PDF Storage
+- PDF Text Extraction
+- Document Chunking
+- Knowledge Retrieval System
 
-✅ Medical Document Chunking
+### 🔍 Retrieval-Augmented Generation (RAG)
 
-✅ Vector Database Creation (ChromaDB)
+- Context-Aware Responses
+- Source-Based Answers
+- Reduced Hallucinations
+- Domain-Specific Knowledge Retrieval
 
-✅ Retrieval-Augmented Generation (RAG)
+### 🗄️ Vector Database
 
-✅ Streamlit Chat Interface
+- ChromaDB Integration
+- Semantic Search
+- Fast Information Retrieval
+- Persistent Knowledge Storage
 
-✅ Medicine Information Search
+### 💊 Medicine Search
 
-✅ Source-Based Responses
+- Medicine Information Lookup
+- Uses and Applications
+- Side Effects Information
+- Dosage References
+- Medical Warnings
+
+### 🖥️ Interactive Interface
+
+- Streamlit Chat Interface
+- Chat History
+- User-Friendly Dashboard
+- Medical Query Input
+
+### 🎙️ Voice Assistant
+
+- Speech-to-Text
+- Voice Question Input
+- Text-to-Speech Responses
+- Hands-Free Interaction
 
 ---
 
-# 🎯 Project Goal
+# 🎯 Project Objective
 
-Most AI chatbots depend on cloud servers and internet connectivity.
+Healthcare information is often inaccessible without internet connectivity or expensive subscription services.
 
-This project aims to build a:
+This project aims to create a:
 
 - Private
 - Offline
-- Fast
+- Intelligent
 - Domain-Specific
+- AI-Powered
 
-Medical AI Assistant capable of answering questions using trusted medical resources stored locally.
+Medical Assistant capable of providing reliable information from trusted medical resources stored locally.
 
 ---
 
 # 🏗️ System Architecture
 
 ```text
-Medical PDFs
-      │
-      ▼
-PDF Extraction
-      │
-      ▼
-Text Chunking
-      │
-      ▼
-Embeddings
-      │
-      ▼
-ChromaDB Vector Store
-      │
-      ▼
-Retriever
-      │
-      ▼
-Llama 3 (Local)
-      │
-      ▼
-Generated Answer
-      │
-      ▼
-Streamlit Interface
+                    Medical PDFs
+                          │
+                          ▼
+                  PDF Extraction
+                          │
+                          ▼
+                    Text Chunking
+                          │
+                          ▼
+                 Embedding Creation
+                          │
+                          ▼
+                    ChromaDB Store
+                          │
+                          ▼
+                      Retriever
+                          │
+                          ▼
+                    Local Llama 3
+                          │
+                          ▼
+                   Generated Answer
+                          │
+         ┌────────────────┴────────────────┐
+         │                                 │
+         ▼                                 ▼
+  Streamlit Interface             Voice Assistant
+         │                                 │
+         ▼                                 ▼
+      User Query                     Voice Query
 ```
 
 ---
 
-# 🛠️ Tech Stack
+# 🛠️ Technology Stack
 
-## AI & Machine Learning
+## Artificial Intelligence
 
 - Llama 3
 - Ollama
@@ -104,6 +140,11 @@ Streamlit Interface
 
 - PyPDF
 
+## Voice Processing
+
+- SpeechRecognition
+- Pyttsx3
+
 ---
 
 # 📂 Project Structure
@@ -122,6 +163,7 @@ AI-Medical-Assistant/
 │   ├── app.py
 │   ├── ingest.py
 │   ├── rag.py
+│   ├── voice_assistant.py
 │   └── utils.py
 │
 ├── requirements.txt
@@ -133,17 +175,17 @@ AI-Medical-Assistant/
 
 # ⚙️ Installation
 
-## 1️⃣ Clone Repository
+## Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/AI-Medical-Assistant.git
+git clone https://github.com/OfficialTanishGupta/AI-Medical-Assistant.git
 
 cd AI-Medical-Assistant
 ```
 
 ---
 
-## 2️⃣ Create Virtual Environment
+## Step 2: Create Virtual Environment
 
 ```bash
 python -m venv venv
@@ -165,13 +207,13 @@ source venv/bin/activate
 
 ---
 
-## 3️⃣ Install Dependencies
+## Step 3: Install Required Libraries
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Or
+Or manually install:
 
 ```bash
 pip install streamlit
@@ -181,13 +223,15 @@ pip install chromadb
 pip install pypdf
 pip install sentence-transformers
 pip install ollama
+pip install SpeechRecognition
+pip install pyttsx3
 ```
 
 ---
 
 # 🦙 Local LLM Setup
 
-This project uses a local Llama model through Ollama.
+This project uses a local Large Language Model through Ollama.
 
 ## Install Ollama
 
@@ -195,11 +239,11 @@ Visit:
 
 https://ollama.com
 
-Download and install Ollama for your operating system.
+Download and install Ollama.
 
 ---
 
-## Pull Llama Model
+## Pull Llama 3 Model
 
 ```bash
 ollama pull llama3
@@ -207,13 +251,13 @@ ollama pull llama3
 
 ---
 
-## Test Model
+## Verify Installation
 
 ```bash
 ollama run llama3
 ```
 
-Example:
+Example Query:
 
 ```text
 What is diabetes?
@@ -221,114 +265,113 @@ What is diabetes?
 
 ---
 
-# 📚 Medical Knowledge Base
+# 📚 Medical Knowledge Base Setup
 
-The assistant uses medical PDFs as its source of information.
-
-Store PDFs inside:
+Store your medical documents inside:
 
 ```text
 data/medical_pdfs/
 ```
 
-Examples:
+Recommended Sources:
 
-- Disease Reference Books
+- Pharmacology Books
+- Medical Textbooks
+- WHO Documentation
+- Disease Reference Manuals
+- Clinical Guidelines
 - Medical Handbooks
-- Pharmacology Guides
-- WHO Publications
-- Medicine Reference Manuals
 
 ---
 
-# 📄 PDF Ingestion Pipeline
+# 📄 PDF Processing Pipeline
 
 The ingestion system performs:
 
-### Step 1
+### 1. Load PDFs
 
-Load PDFs
+Medical documents are loaded automatically.
 
-### Step 2
+### 2. Extract Text
 
-Extract text
+All readable content is extracted.
 
-### Step 3
+### 3. Chunk Text
 
-Split into chunks
+Large documents are divided into smaller sections.
 
-### Step 4
+### 4. Generate Embeddings
 
-Prepare chunks for embedding generation
+Embeddings are created for semantic understanding.
+
+### 5. Store Embeddings
+
+Embeddings are stored in ChromaDB.
 
 ---
 
-# 🔎 Embedding Generation
+# 🔎 Embedding Model
 
-The project converts medical text into embeddings using:
+The project uses:
 
 ```text
 all-MiniLM-L6-v2
 ```
 
-from Sentence Transformers.
-
 Benefits:
 
-- Fast retrieval
-- Semantic search
-- Better medical context understanding
+- Lightweight
+- Fast
+- Accurate Semantic Search
+- Efficient Local Execution
 
 ---
 
 # 🗄️ Vector Database
 
-Embeddings are stored in:
+ChromaDB is used to store document embeddings.
 
-```text
-ChromaDB
-```
+Responsibilities:
 
-Purpose:
-
-- Store vector embeddings
-- Perform similarity search
-- Retrieve relevant medical knowledge
+- Embedding Storage
+- Similarity Search
+- Retrieval Optimization
+- Persistent Knowledge Storage
 
 ---
 
 # 🤖 Retrieval-Augmented Generation (RAG)
 
-Instead of relying only on Llama's training data:
+Instead of relying only on the LLM's training data:
 
 ```text
 User Question
       │
       ▼
-Retriever
+Retrieve Relevant Chunks
       │
       ▼
-Medical Chunks
+Inject Context into Prompt
       │
       ▼
-Llama 3
+Llama 3 Generates Response
       │
       ▼
-Answer
+Answer with Sources
 ```
 
 Benefits:
 
-- More accurate answers
-- Domain-specific knowledge
-- Reduced hallucinations
-- Easy knowledge updates
+- Accurate Responses
+- Medical Context Awareness
+- Reduced Hallucinations
+- Updatable Knowledge Base
 
 ---
 
-# 💊 Medicine Search Feature
+# 💊 Medicine Search Module
 
-Users can search medicine names.
+Users can search medicines directly.
 
 Example:
 
@@ -339,42 +382,44 @@ Paracetamol
 Expected Output:
 
 ```text
+Medicine Name
+
 Uses
 
-Dosage Information
+Recommended Applications
 
 Warnings
 
-Side Effects
+Possible Side Effects
 
-Interactions
+Dosage Information
+
+Drug Interactions
 ```
 
-Information is retrieved directly from the medical knowledge base.
+Data is retrieved from the medical knowledge base.
 
 ---
 
 # 🖥️ Streamlit Interface
 
-The application includes a chatbot-style UI.
+The application provides a chatbot-style interface.
 
 Features:
 
 - Ask Medical Questions
 - Search Medicines
-- Display AI Responses
-- View Source Documents
-- User-Friendly Interface
+- View AI Responses
+- Source Display
+- Conversation History
 
----
-
-# ▶️ Run Application
+Run:
 
 ```bash
 streamlit run src/app.py
 ```
 
-Application launches at:
+Application URL:
 
 ```text
 http://localhost:8501
@@ -382,81 +427,173 @@ http://localhost:8501
 
 ---
 
-# 📊 Development Progress
+# 🎙️ Voice Assistant Module
 
-## Phase 1
+Voice Assistant enables hands-free interaction.
 
-- [x] Project Setup
+### Features
 
-## Phase 2
+- Speak Questions
+- Convert Speech to Text
+- Generate AI Responses
+- Convert Responses to Speech
+- Real-Time Interaction
 
-- [x] Local LLM Integration
+---
 
-## Phase 3
+## Required Libraries
 
-- [x] Medical Knowledge Base Setup
+```bash
+pip install SpeechRecognition
+pip install pyttsx3
+```
 
-## Phase 4
+---
 
-- [x] PDF Extraction Pipeline
+## Voice Workflow
 
-## Phase 5
+```text
+User Speaks
+      │
+      ▼
+Speech Recognition
+      │
+      ▼
+Text Conversion
+      │
+      ▼
+RAG Pipeline
+      │
+      ▼
+Llama 3 Response
+      │
+      ▼
+Text-to-Speech Output
+```
 
-- [x] Vector Database Creation
+---
 
-## Phase 6
+# ▶️ Running the Application
 
-- [x] RAG Pipeline
+## Launch Streamlit UI
 
-## Phase 7
+```bash
+streamlit run src/app.py
+```
 
-- [x] Streamlit Interface
+---
 
-## Phase 8
+## Launch Voice Assistant
 
-- [x] Medicine Search Feature
+```bash
+python src/voice_assistant.py
+```
+
+---
+
+# 📊 Development Roadmap
+
+## ✅ Phase 1
+
+Project Setup
+
+## ✅ Phase 2
+
+Local LLM Integration
+
+## ✅ Phase 3
+
+Medical Knowledge Base Setup
+
+## ✅ Phase 4
+
+PDF Extraction Pipeline
+
+## ✅ Phase 5
+
+Vector Database Creation
+
+## ✅ Phase 6
+
+RAG Pipeline
+
+## ✅ Phase 7
+
+Streamlit Chat Interface
+
+## ✅ Phase 8
+
+Medicine Search Feature
+
+## ✅ Phase 9
+
+Voice Assistant Integration
 
 ---
 
 # 🔮 Upcoming Features
 
-### Phase 9
-
-Voice Assistant
-
-- Speech-to-Text
-- Text-to-Speech
-
-### Phase 10
+## 🚀 Phase 10
 
 Medical Report Summarizer
 
-- Blood Reports
+- Blood Test Reports
 - Prescriptions
+- Medical Records
 - Lab Reports
 
-### Phase 11
+---
+
+## 🚀 Phase 11
 
 Medical LLM Fine-Tuning
+
+Using:
 
 - LoRA
 - QLoRA
 - Unsloth
 
-### Phase 12
+Create:
+
+```text
+Medical-Llama-3
+```
+
+Domain-specialized Medical Model
+
+---
+
+## 🚀 Phase 12
 
 Docker Deployment
 
-- Portable Installation
-- Production Ready
+Features:
+
+- One-Click Setup
+- Portable Deployment
+- Easy Installation
+
+---
+
+# 📈 Future Enhancements
+
+- Android Application
+- Multi-Language Support
+- Medical Image Analysis
+- OCR for Prescriptions
+- Disease Prediction Module
+- Healthcare Recommendation Engine
+- Hospital Finder Integration
+- Emergency Guidance Module
 
 ---
 
 # ⚠️ Disclaimer
 
-This project is intended for educational and research purposes only.
+This project is intended solely for educational, research, and demonstration purposes.
 
-The AI Medical Assistant does not replace professional medical advice, diagnosis, or treatment.
+The AI Medical Assistant does not replace professional medical advice, diagnosis, treatment, or healthcare services.
 
 Always consult a qualified healthcare professional before making medical decisions.
 
@@ -464,21 +601,30 @@ Always consult a qualified healthcare professional before making medical decisio
 
 # 👨‍💻 Author
 
-Tanish Gupta
+**Tanish Gupta**
 
-AI | Machine Learning | LLMs | RAG | Android Development
+AI Engineer | Machine Learning Enthusiast | LLM Developer | RAG Systems Builder | Android Developer
 
 GitHub:
+
 https://github.com/OfficialTanishGupta
 
 ---
 
 # ⭐ Support
 
-If you find this project useful:
+If you found this project useful:
 
 ⭐ Star the repository
 
 🍴 Fork the repository
 
 🛠️ Contribute to improve the project
+
+📢 Share with the AI and Open Source Community
+
+---
+
+# 🌟 Project Vision
+
+To build a fully offline, privacy-focused, domain-specialized AI Medical Assistant that can provide reliable medical information anywhere, anytime, without dependence on cloud services or internet connectivity.

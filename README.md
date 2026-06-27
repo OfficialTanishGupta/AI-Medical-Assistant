@@ -2,86 +2,53 @@
 
 An AI-powered Medical Assistant that runs **completely offline** using a local Large Language Model (LLM), Retrieval-Augmented Generation (RAG), a Medical Knowledge Base, and Voice Interaction capabilities.
 
-This project enables users to ask medical questions, search medicine information, retrieve answers from trusted medical documents, and interact with the assistant using voice commands without requiring internet connectivity.
+This project enables users to ask medical questions, search medicine information, extract data from laboratory reports, and interact with the assistant using hands-free voice commands without requiring internet connectivity or external API keys.
 
 ---
 
 # 🚀 Features
 
-## Implemented Features (Phase 1 - Phase 9)
+## Implemented Features (Phase 1 - Phase 10)
 
 ### 🤖 Local AI Assistant
 
-- Local Llama 3 Integration using Ollama
-- Fully Offline Operation
-- Privacy-Focused Design
-- No External API Required
+- **Local Llama 3 Integration** via Ollama.
+- **100% Offline Operation** ensuring total medical data privacy.
+- **Privacy-Focused Design** where no medical data ever leaves your computer hard drive.
+- **No External API Keys** or cloud subscriptions required.
 
-### 📚 Medical Knowledge Base
+### 📚 Medical Knowledge Base & RAG
 
-- Medical PDF Storage
-- PDF Text Extraction
-- Document Chunking
-- Knowledge Retrieval System
+- **Persistent Vector Store** powered by ChromaDB.
+- **Fast Similarity Search** using the `all-MiniLM-L6-v2` embedding model.
+- **Context-Aware Responses** that ground Llama 3's outputs directly to your uploaded text files.
+- **Reduced Hallucinations** by enforcing strict factual fallback rules.
 
-### 🔍 Retrieval-Augmented Generation (RAG)
+### 💊 Medicine Search Module
 
-- Context-Aware Responses
-- Source-Based Answers
-- Reduced Hallucinations
-- Domain-Specific Knowledge Retrieval
+- **Pharmacology Lookup** for generic or brand medication names.
+- **Structured Outputs** dividing references cleanly into Uses, Side Effects & Warnings, and Dosage Information.
 
-### 🗄️ Vector Database
+### 🎙️ Voice Assistant Module
 
-- ChromaDB Integration
-- Semantic Search
-- Fast Information Retrieval
-- Persistent Knowledge Storage
+- **Speech-to-Text Input** allows users to click a button and vocalize their symptoms.
+- **Text-to-Speech Output** reads the final medical or prescription analysis aloud using clear offline audio synthesis.
 
-### 💊 Medicine Search
+### 📄 Medical Report Summarizer (New)
 
-- Medicine Information Lookup
-- Uses and Applications
-- Side Effects Information
-- Dosage References
-- Medical Warnings
+- **PDF Extraction Pipeline** parses underlying text layers out of uploaded blood panels, prescriptions, or laboratory results.
+- **Structured Laboratory Breakdown** providing a document summary, tracking out-of-range biomarker values, providing clinical observations, and outputting safety-hedged next-step recommendations.
 
-### 🖥️ Interactive Interface
+### 🖥️ Cyber-Blue Dashboard UI
 
-- Streamlit Chat Interface
-- Chat History
-- User-Friendly Dashboard
-- Medical Query Input
-
-### 🎙️ Voice Assistant
-
-- Speech-to-Text
-- Voice Question Input
-- Text-to-Speech Responses
-- Hands-Free Interaction
-
----
-
-# 🎯 Project Objective
-
-Healthcare information is often inaccessible without internet connectivity or expensive subscription services.
-
-This project aims to create a:
-
-- Private
-- Offline
-- Intelligent
-- Domain-Specific
-- AI-Powered
-
-Medical Assistant capable of providing reliable information from trusted medical resources stored locally.
+- **Modular Layout Split** providing real-time system status indicators, overall query counters, and tab-free workspace navigation.
 
 ---
 
 # 🏗️ System Architecture
 
 ```text
-                    Medical PDFs
+                     Medical PDFs
                           │
                           ▼
                   PDF Extraction
@@ -99,7 +66,7 @@ Medical Assistant capable of providing reliable information from trusted medical
                       Retriever
                           │
                           ▼
-                    Local Llama 3
+                    Local Llama 3 ◄─── Uploaded Lab Reports (PDF)
                           │
                           ▼
                    Generated Answer
@@ -110,40 +77,21 @@ Medical Assistant capable of providing reliable information from trusted medical
   Streamlit Interface             Voice Assistant
          │                                 │
          ▼                                 ▼
-      User Query                     Voice Query
+    User Query /                       Voice Output
+    Lab PDF Upload                     (Reads Aloud)
 ```
 
 ---
 
 # 🛠️ Technology Stack
 
-## Artificial Intelligence
-
-- Llama 3
-- Ollama
-- LangChain
-- Sentence Transformers
-
-## Vector Database
-
-- ChromaDB
-
-## Frontend
-
-- Streamlit
-
-## Backend
-
-- Python
-
-## Document Processing
-
-- PyPDF
-
-## Voice Processing
-
-- SpeechRecognition
-- Pyttsx3
+- **Large Language Model Engine:** Llama 3 via Ollama
+- **Embeddings Pipeline:** Sentence Transformers (`all-MiniLM-L6-v2`)
+- **Vector Storage Database:** ChromaDB
+- **Frontend Workspace Dashboard:** Streamlit
+- **Document Processing Tools:** PyPDF (`PdfReader`)
+- **Voice / Audio Automation:** SpeechRecognition, Pyttsx3, PyAudio
+- **Core Runtime Environment:** Python 3.10+ / 3.11+
 
 ---
 
@@ -152,427 +100,132 @@ Medical Assistant capable of providing reliable information from trusted medical
 ```text
 AI-Medical-Assistant/
 │
+├── chroma_db/               # Persistent ChromaDB collection binaries
 ├── data/
-│   └── medical_pdfs/
+│   └── medical_guide.pdf    # Core knowledge base documents
 │
+├── models/                  # Optional local model file storage
 ├── vector_db/
-│
-├── models/
+│   └── vector_db.py         # DB Ingestion, chunking, and verification tests
 │
 ├── src/
-│   ├── app.py
-│   ├── ingest.py
-│   ├── rag.py
-│   ├── voice_assistant.py
-│   └── utils.py
+│   ├── app.py               # Main Streamlit UI layout and app workspace
+│   ├── ingest.py            # PDF text layer parsing and extraction functions
+│   ├── rag.py               # Core RAG retrieval loop and prompt handlers
+│   └── voice_assistant.py   # Offline audio recorder and speech-to-text drivers
 │
-├── requirements.txt
-├── README.md
-└── .gitignore
+├── requirements.txt         # Project runtime dependency list
+├── README.md                # System engineering documentation
+└── .gitignore               # Venv, cache, and DB file tracking rules
 ```
 
 ---
 
-# ⚙️ Installation
+# ⚙️ Installation & Workspace Setup
 
-## Step 1: Clone Repository
+### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/OfficialTanishGupta/AI-Medical-Assistant.git
-
+git clone https://github.com
 cd AI-Medical-Assistant
 ```
 
----
-
-## Step 2: Create Virtual Environment
+### Step 2: Establish a Virtual Environment
 
 ```bash
 python -m venv venv
 ```
 
-### Activate Environment
+- **Windows Activation:** `venv\Scripts\activate`
+- **Linux / Mac Activation:** `source venv/bin/activate`
 
-Windows
-
-```bash
-venv\Scripts\activate
-```
-
-Linux / Mac
-
-```bash
-source venv/bin/activate
-```
-
----
-
-## Step 3: Install Required Libraries
+### Step 3: Install Required Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Or manually install:
-
-```bash
-pip install streamlit
-pip install langchain
-pip install langchain-community
-pip install chromadb
-pip install pypdf
-pip install sentence-transformers
-pip install ollama
-pip install SpeechRecognition
-pip install pyttsx3
-```
+_Note: If installing `pyaudio` fails on Windows due to build tools, run `pip install pipwin` followed by `pipwin install pyaudio` to map audio compilation binaries automatically._
 
 ---
 
-# 🦙 Local LLM Setup
+# 🦙 Local Model Dependencies Setup
 
-This project uses a local Large Language Model through Ollama.
+### 1. Download Ollama Engine
 
-## Install Ollama
+Head to [Ollama's Official Portal](https://ollama.com) and install the local background runtime assistant for your matching OS architecture.
 
-Visit:
+### 2. Pull down Llama 3 Weights
 
-https://ollama.com
-
-Download and install Ollama.
-
----
-
-## Pull Llama 3 Model
+Open up an independent, non-virtualized system console window and run:
 
 ```bash
 ollama pull llama3
 ```
 
----
+### 3. Verify Local Execution
 
-## Verify Installation
+Ensure the model is awake and responding locally:
 
 ```bash
 ollama run llama3
-```
-
-Example Query:
-
-```text
-What is diabetes?
-```
-
----
-
-# 📚 Medical Knowledge Base Setup
-
-Store your medical documents inside:
-
-```text
-data/medical_pdfs/
-```
-
-Recommended Sources:
-
-- Pharmacology Books
-- Medical Textbooks
-- WHO Documentation
-- Disease Reference Manuals
-- Clinical Guidelines
-- Medical Handbooks
-
----
-
-# 📄 PDF Processing Pipeline
-
-The ingestion system performs:
-
-### 1. Load PDFs
-
-Medical documents are loaded automatically.
-
-### 2. Extract Text
-
-All readable content is extracted.
-
-### 3. Chunk Text
-
-Large documents are divided into smaller sections.
-
-### 4. Generate Embeddings
-
-Embeddings are created for semantic understanding.
-
-### 5. Store Embeddings
-
-Embeddings are stored in ChromaDB.
-
----
-
-# 🔎 Embedding Model
-
-The project uses:
-
-```text
-all-MiniLM-L6-v2
-```
-
-Benefits:
-
-- Lightweight
-- Fast
-- Accurate Semantic Search
-- Efficient Local Execution
-
----
-
-# 🗄️ Vector Database
-
-ChromaDB is used to store document embeddings.
-
-Responsibilities:
-
-- Embedding Storage
-- Similarity Search
-- Retrieval Optimization
-- Persistent Knowledge Storage
-
----
-
-# 🤖 Retrieval-Augmented Generation (RAG)
-
-Instead of relying only on the LLM's training data:
-
-```text
-User Question
-      │
-      ▼
-Retrieve Relevant Chunks
-      │
-      ▼
-Inject Context into Prompt
-      │
-      ▼
-Llama 3 Generates Response
-      │
-      ▼
-Answer with Sources
-```
-
-Benefits:
-
-- Accurate Responses
-- Medical Context Awareness
-- Reduced Hallucinations
-- Updatable Knowledge Base
-
----
-
-# 💊 Medicine Search Module
-
-Users can search medicines directly.
-
-Example:
-
-```text
-Paracetamol
-```
-
-Expected Output:
-
-```text
-Medicine Name
-
-Uses
-
-Recommended Applications
-
-Warnings
-
-Possible Side Effects
-
-Dosage Information
-
-Drug Interactions
-```
-
-Data is retrieved from the medical knowledge base.
-
----
-
-# 🖥️ Streamlit Interface
-
-The application provides a chatbot-style interface.
-
-Features:
-
-- Ask Medical Questions
-- Search Medicines
-- View AI Responses
-- Source Display
-- Conversation History
-
-Run:
-
-```bash
-streamlit run src/app.py
-```
-
-Application URL:
-
-```text
-http://localhost:8501
-```
-
----
-
-# 🎙️ Voice Assistant Module
-
-Voice Assistant enables hands-free interaction.
-
-### Features
-
-- Speak Questions
-- Convert Speech to Text
-- Generate AI Responses
-- Convert Responses to Speech
-- Real-Time Interaction
-
----
-
-## Required Libraries
-
-```bash
-pip install SpeechRecognition
-pip install pyttsx3
-```
-
----
-
-## Voice Workflow
-
-```text
-User Speaks
-      │
-      ▼
-Speech Recognition
-      │
-      ▼
-Text Conversion
-      │
-      ▼
-RAG Pipeline
-      │
-      ▼
-Llama 3 Response
-      │
-      ▼
-Text-to-Speech Output
+# Test Query: "Hello" -> Once verified, type "/exit" to leave.
 ```
 
 ---
 
 # ▶️ Running the Application
 
-## Launch Streamlit UI
+### 1. Start Your Database Pipeline (If collection is uninitialized)
+
+To populate your `chroma_db/` folder with vectors generated directly from your target reference text, execute the ingestion file from your project root:
+
+```bash
+python vector_db/vector_db.py
+```
+
+### 2. Launch the Streamlit Ecosystem
+
+Run the layout orchestration code using the runtime server:
 
 ```bash
 streamlit run src/app.py
 ```
 
----
-
-## Launch Voice Assistant
-
-```bash
-python src/voice_assistant.py
-```
+Your operating system will open up an offline application dashboard container instance located automatically at: `http://localhost:8501`
 
 ---
 
 # 📊 Development Roadmap
 
-## ✅ Phase 1
-
-Project Setup
-
-## ✅ Phase 2
-
-Local LLM Integration
-
-## ✅ Phase 3
-
-Medical Knowledge Base Setup
-
-## ✅ Phase 4
-
-PDF Extraction Pipeline
-
-## ✅ Phase 5
-
-Vector Database Creation
-
-## ✅ Phase 6
-
-RAG Pipeline
-
-## ✅ Phase 7
-
-Streamlit Chat Interface
-
-## ✅ Phase 8
-
-Medicine Search Feature
-
-## ✅ Phase 9
-
-Voice Assistant Integration
+- [x] **Phase 1:** Core Repository Architecture Setup
+- [x] **Phase 2:** Local Ollama Llama 3 Integration
+- [x] **Phase 3:** Data Directory Structuring
+- [x] **Phase 4:** PyPDF Layer Text Extraction Pipelines
+- [x] **Phase 5:** ChromaDB Vector Storage Generation
+- [x] **Phase 6:** Context-Aware RAG Fallback Core Engines
+- [x] **Phase 7:** Streamlit Chat Interface Implementation
+- [x] **Phase 8:** Structured Medicine Profile Lookups
+- [x] **Phase 9:** SpeechRecognition and Pyttsx3 Modular Integration
+- [x] **Phase 10:** Medical Report Summarizer & Biomarker Extraction
 
 ---
 
-# 🔮 Upcoming Features
+# 🔮 Upcoming Features & Next Steps
 
-## 🚀 Phase 10
+### 🚀 Phase 11 — Medical LLM Fine-Tuning
 
-Medical Report Summarizer
+Transition away from pure background RAG prompting. We will train a highly domain-specialized **Medical-Llama-3** model directly using parameter-efficient adapters:
 
-- Blood Test Reports
-- Prescriptions
-- Medical Records
-- Lab Reports
+- **Frameworks:** Unsloth / Hugging Face TRL / PEFT
+- **Techniques:** 4-bit Quantization, LoRA, and QLoRA
+- **Datasets:** Convert local medical guides into structured clinical instruction pairs (`dataset.json`).
 
----
+### 🚀 Phase 12 — Docker Containers Deployment
 
-## 🚀 Phase 11
+Wrap up the local workspace inside a portable, repeatable ecosystem configuration layer:
 
-Medical LLM Fine-Tuning
-
-Using:
-
-- LoRA
-- QLoRA
-- Unsloth
-
-Create:
-
-```text
-Medical-Llama-3
-```
-
-Domain-specialized Medical Model
-
----
-
-## 🚀 Phase 12
-
-Docker Deployment
-
-Features:
-
-- One-Click Setup
-- Portable Deployment
-- Easy Installation
+- **Features:** One-click environment setups, volume mapping parameters for stored vector graphs, and network exposures to tie directly with external desktop systems.
 
 ---
 

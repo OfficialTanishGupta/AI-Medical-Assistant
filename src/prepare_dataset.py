@@ -27,12 +27,16 @@ JSON Output Structure:
 ]"""
 
     try:
+        # Added format="json" to force Ollama to output valid JSON text structure
         response = ollama.generate(
-            model="llama3", prompt=prompt, options={"temperature": 0.3}
+            model="llama3", prompt=prompt, format="json", options={"temperature": 0.3}
         )
         raw_output = response["response"].strip()
-        if raw_output.startswith("```json"):
+
+        # Clean markdown wraps if the model added them despite the format flag
+        if raw_output.startswith("```"):
             raw_output = raw_output.replace("```json", "").replace("```", "").strip()
+
         return json.loads(raw_output)
     except Exception as e:
         print(f"[!] Error processing chunk: {e}")
